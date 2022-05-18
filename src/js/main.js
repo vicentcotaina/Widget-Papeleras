@@ -1,4 +1,5 @@
 'use strict';
+const axios = require('axios');
 // IMPORTACIONES
 import {
   URL_BASE_API,
@@ -70,14 +71,12 @@ updateGeneralViewData();
  * @return {Promise}
  */
 async function getDataFromAPI(url) {
-  const response = await fetch(url);
-  let result;
-  if (response.ok) {
-    result = await response.json();
-  } else {
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
     throw new Error('Error in the response of the result.');
   }
-  return result;
 }
 /**
  *
