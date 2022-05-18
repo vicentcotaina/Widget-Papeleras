@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Papereres</title>
+    <link rel="shortcut icon" href="./src/img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./src/img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./src/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"
+    ></script>
+    <script src="./dist/main.js" type="module" defer></script>
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+  </head>
+  <body>
+    <main>
+      <section id="widget">
+        <section id="menu">
+          <section id="nombreWidget">
+            <img src="./src/img/25008.png" alt="Icono papelera" />
+            <p>INFORMACIÓ PAPERERES</p>
+          </section>
+          <hr />
+          <ul>
+            <li><a id="generalViewButton">VISTA GENERAL</a></li>
+            <li>
+              <a id="stadisticsViewButton">CRONOLOGIA D'ESTADÍSTIQUES</a>
+            </li>
+          </ul>
+        </section>
+        <section id="generalView">
+          <div id="map"></div>
+          <div id="datosSensores">
+            <h2 id="title">MITJANA DE TOTES <br />LES PAPERERES</h2>
+            <h2 id="mesureDate"><br /></h2>
+            <div id="temperatureMeasurer"></div>
+            <div id="medidor"></div>
+          </div>
+        </section>
+        <section id="stadisticsView">
+          <select name="sensors"></select>
+          <div id="stadisticsChart"></div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
