@@ -84,11 +84,6 @@ section#generalView {
 section#generalView > div#datosSensores > h2 {
   text-align: center;
 }
-/* section#generalView > div#datosSensores > div#temperatureMeasurer {
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-} */
 section#generalView > div#datosSensores > div#medidor {
   height: 100%;
   align-items: center;

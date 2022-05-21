@@ -14,7 +14,6 @@ const stadisticsViewContainer = document.getElementById('stadisticsView');
 const generalViewButton = document.getElementById('generalViewButton');
 const stadisticsViewButton = document.getElementById('stadisticsViewButton');
 const mesureDate = document.getElementById('mesureDate');
-const temperature = document.getElementById('temperature');
 const title = document.getElementById('title');
 const selectSensor = document.querySelector('select[name="sensors"]');
 const medidor = document.getElementById('medidor');
@@ -33,7 +32,11 @@ generalViewButton.addEventListener('click', (event) => {
   }, 100);
   stadisticsViewButton.parentElement.style.backgroundColor = 'transparent';
   event.target.parentElement.style.backgroundColor = 'white';
-  if (stadisticsViewContainer.hidden === false) {
+  if (mesureDate.style.display !== 'none') {
+    title.style.display = 'block';
+    mesureDate.style.display = 'none';
+  }
+  if (stadisticsViewContainer.style.display !== 'none') {
     generalViewContainer.style.display = 'grid';
     stadisticsViewContainer.style.display = 'none';
   }
@@ -45,7 +48,7 @@ stadisticsViewButton.addEventListener('click', (event) => {
   }, 100);
   generalViewButton.parentElement.style.backgroundColor = 'transparent';
   event.target.parentElement.style.backgroundColor = 'white';
-  if (generalViewContainer.hidden === false) {
+  if (generalViewContainer.style.display !== 'none') {
     generalViewContainer.style.display = 'none';
     stadisticsViewContainer.style.display = 'block';
     selectSensor.style.display = 'block';
@@ -54,7 +57,11 @@ stadisticsViewButton.addEventListener('click', (event) => {
 });
 selectSensor.addEventListener('change', async (event) => {
   if (event.target.value) {
+    myChart2.showLoading('default', {
+      color: 'rgb(255,236,159)', text: 'Carregant dades...',
+    });
     const data = await getDataFromAPI(URL_BASE_API + `${event.target.value}`);
+    myChart2.hideLoading();
     setTimelineFillValueGraph(data);
     localStorage.setItem('selectedSensor', event.target.value);
   }
@@ -113,13 +120,14 @@ function initMap(latitude, longitude) {
       {
         attribution:
         'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 12,
+        maxZoom: 20,
         id: 'mapbox/streets-v11',
         tileSize: 512,
         zoomOffset: -1,
         accessToken:
         'pk.eyJ1IjoieGF2aTEycC1wcm9mZSIsImEiOiJja3kxbnhrZjAwZDdkMnhybTVheWpzOXVrIn0.6tgSdQGqA4w9VQ0kY4xrlA', // eslint-disable-line
-      }).addTo(map);
+      },
+  ).addTo(map);
   return map;
 }
 /**
@@ -136,10 +144,12 @@ function createMarker(map, data) {
   newMarker.addEventListener('click', (event) => {
     if (title.style.display !== 'none') {
       title.style.display = 'none';
+      mesureDate.style.display = 'block';
     }
     setAverageFillValueGraph(data.fillingLevel);
-    mesureDate.innerHTML = 'MESURA PRESA EL ';
-    mesureDate.innerHTML += `
+    mesureDate.innerHTML = `
+      \n
+      MESURA PRESA EL 
       ${new Date(data.TimeInstant).toLocaleString('es-ES')}
     `;
   });
