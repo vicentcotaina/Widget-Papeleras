@@ -9,6 +9,7 @@ import {
 // DEFINICIONES
 const realtimeData = await getDataFromAPI(URL_BASE_API + 'getRealtime');
 const allIds = realtimeData.map((paperbin) => paperbin._id);
+let firstTime = true;
 const generalViewContainer = document.getElementById('generalView');
 const stadisticsViewContainer = document.getElementById('stadisticsView');
 const generalViewButton = document.getElementById('generalViewButton');
@@ -58,11 +59,11 @@ stadisticsViewButton.addEventListener('click', (event) => {
 selectSensor.addEventListener('change', async (event) => {
   if (event.target.value) {
     myChart2.showLoading('default', {
-      color: 'rgb(255,236,159)', text: 'Carregant dades...',
+      color: 'rgb(255,236,159)', text: ' Carregant dades...',
     });
     const data = await getDataFromAPI(URL_BASE_API + `${event.target.value}`);
-    myChart2.hideLoading();
     setTimelineFillValueGraph(data);
+    myChart2.hideLoading();
     localStorage.setItem('selectedSensor', event.target.value);
   }
 });
@@ -91,7 +92,6 @@ async function getDataFromAPI(url) {
  */
 function geolocate(data) {
   let map;
-  let firstTime = true;
   navigator.geolocation.watchPosition(
       (marker) => {
         if (firstTime) {
@@ -140,7 +140,11 @@ function createMarker(map, data) {
   const newMarker = L.marker([
     data.coordinates.positionX,
     data.coordinates.positionY,
-  ]).addTo(map);
+  ]).addTo(map).bindPopup(`Seleccionat`, {
+    closeOnClick: false,
+    closeButton: false,
+    closeOnEscapeKey: false,
+  });
   newMarker.addEventListener('click', (event) => {
     if (title.style.display !== 'none') {
       title.style.display = 'none';
@@ -148,7 +152,6 @@ function createMarker(map, data) {
     }
     setAverageFillValueGraph(data.fillingLevel);
     mesureDate.innerHTML = `
-      \n
       MESURA PRESA EL 
       ${new Date(data.TimeInstant).toLocaleString('es-ES')}
     `;
@@ -341,12 +344,13 @@ function setTimelineFillValueGraph(data = []) {
  *
  */
 async function updateStadisticsViewData() {
+  let counter=0;
   if (selectSensor !== null) {
     selectSensor.innerHTML = '';
   }
   selectSensor.append(document.createElement('option'));
   for (const paperbin of allIds) {
-    selectSensor.append(createSensorOption(paperbin));
+    selectSensor.append(createSensorOption(paperbin, counter++));
   }
   if (localStorage.getItem('selectedSensor')) {
     selectSensor.value = localStorage.getItem('selectedSensor');
@@ -357,12 +361,14 @@ async function updateStadisticsViewData() {
 }
 /**
  *
- * @param {String} paperbin
+ * @param {*} paperbin
+ * @param {Number} sensorNumber
  * @return {HTMLOptionElement}
  */
-function createSensorOption(paperbin) {
+function createSensorOption(paperbin, sensorNumber) {
   const option = document.createElement('option');
   option.value = paperbin;
-  option.innerHTML = paperbin;
+  option.innerHTML = `Sensor ${sensorNumber}`;
   return option;
 }
+
