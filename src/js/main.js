@@ -5,6 +5,9 @@ import {
   URL_BASE_API,
   LATITUDE_VALENCIA,
   LONGITUDE_VALENCIA,
+  GREEN_ICON,
+  YELLOW_ICON,
+  RED_ICON,
 } from './globalParams.js';
 // DEFINICIONES
 const realtimeData = await getDataFromAPI(URL_BASE_API + 'getRealtime');
@@ -140,7 +143,10 @@ function createMarker(map, data) {
   const newMarker = L.marker([
     data.coordinates.positionX,
     data.coordinates.positionY,
-  ]).addTo(map).bindPopup(`Seleccionat`, {
+  ],
+  {
+    icon: getMarkerIcon(data.fillingLevel),
+  }).addTo(map).bindPopup(`Seleccionat`, {
     closeOnClick: false,
     closeButton: false,
     closeOnEscapeKey: false,
@@ -371,4 +377,17 @@ function createSensorOption(paperbin, sensorNumber) {
   option.innerHTML = `Sensor ${sensorNumber}`;
   return option;
 }
-
+/**
+ *
+ * @param {*} fillValue
+ * @return {Icon}
+ */
+function getMarkerIcon(fillValue) {
+  if (fillValue > 0.70) {
+    return RED_ICON;
+  } else if (fillValue > 0.30) {
+    return YELLOW_ICON;
+  } else {
+    return GREEN_ICON;
+  }
+}
