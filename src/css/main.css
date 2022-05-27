@@ -58,9 +58,8 @@ section#widget > section#menu > ul {
   align-items: center;
 }
 section#widget > section#menu > ul > li {
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   margin: 1rem;
-  
   width: 80%;
   cursor: pointer;
 }
@@ -119,4 +118,8 @@ section#stadisticsView > select {
   section#stadisticsView > select {
     text-align: center;
   }
+}
+
+@keyframes buttonHover {
+  100% {background-color:rgba(226, 189, 39, 0.5);}
 }

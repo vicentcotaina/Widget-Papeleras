@@ -1,6 +1,6 @@
 'use strict';
 const axios = require('axios');
-// IMPORTACIONES
+// IMPORTS
 import {
   URL_BASE_API,
   LATITUDE_VALENCIA,
@@ -9,9 +9,23 @@ import {
   YELLOW_ICON,
   RED_ICON,
 } from './globalParams.js';
-// DEFINICIONES
+// EXPORTS
+export {
+  getDataFromAPI,
+  geolocate,
+  initMap,
+  createMarker,
+  updateGeneralViewData,
+  updateStadisticsViewData,
+  getMarkerIcon,
+  createSensorOption,
+  setTimelineFillValueGraph,
+  setAverageFillValueGraph,
+};
+// VARIABLES
 const realtimeData = await getDataFromAPI(URL_BASE_API + 'getRealtime');
 const allIds = realtimeData.map((paperbin) => paperbin._id);
+// GLOBAL VARIABLES
 let firstTime = true;
 const generalViewContainer = document.getElementById('generalView');
 const stadisticsViewContainer = document.getElementById('stadisticsView');
@@ -20,10 +34,9 @@ const stadisticsViewButton = document.getElementById('stadisticsViewButton');
 const mesureDate = document.getElementById('mesureDate');
 const title = document.getElementById('title');
 const selectSensor = document.querySelector('select[name="sensors"]');
-const medidor = document.getElementById('medidor');
-const stadisticsChart = document.getElementById('stadisticsChart');
-const myChart = echarts.init(medidor);
-const myChart2 = echarts.init(stadisticsChart);
+const myChart = echarts.init(document.getElementById('medidor'));
+const myChart2 = echarts.init(document.getElementById('stadisticsChart'));
+
 // EVENT LISTENERS
 window.addEventListener('resize', () => {
   myChart.resize();
@@ -44,7 +57,7 @@ generalViewButton.addEventListener('click', (event) => {
     generalViewContainer.style.display = 'grid';
     stadisticsViewContainer.style.display = 'none';
   }
-  updateGeneralViewData();
+  updateGeneralViewData(realtimeData);
 });
 stadisticsViewButton.addEventListener('click', (event) => {
   setTimeout(() => {
@@ -57,7 +70,7 @@ stadisticsViewButton.addEventListener('click', (event) => {
     stadisticsViewContainer.style.display = 'block';
     selectSensor.style.display = 'block';
   }
-  updateStadisticsViewData();
+  updateStadisticsViewData(allIds);
 });
 selectSensor.addEventListener('change', async (event) => {
   if (event.target.value) {
@@ -70,11 +83,13 @@ selectSensor.addEventListener('change', async (event) => {
     localStorage.setItem('selectedSensor', event.target.value);
   }
 });
+
 // PROGRAMA PRNCIPAL
 if (!navigator.geolocation) {
   throw new Error('Geolocation is not supported on your browser.');
 }
-updateGeneralViewData();
+updateGeneralViewData(realtimeData);
+
 // FUNCIONES
 /**
  *
@@ -166,12 +181,12 @@ function createMarker(map, data) {
 }
 /**
  *
+ * @param {*} data
  */
-async function updateGeneralViewData() {
-  geolocate(realtimeData);
+async function updateGeneralViewData(data) {
+  geolocate(data);
   const fillAverageValue =
-    realtimeData.reduce((sum, current) => sum + current.fillingLevel, 0) /
-    realtimeData.length;
+    data.reduce((sum, current) => sum + current.fillingLevel, 0) / data.length;
   setAverageFillValueGraph(fillAverageValue);
 }
 /**
@@ -348,14 +363,15 @@ function setTimelineFillValueGraph(data = []) {
 }
 /**
  *
+ * @param {*} idArray
  */
-async function updateStadisticsViewData() {
+async function updateStadisticsViewData(idArray) {
   let counter=0;
   if (selectSensor !== null) {
     selectSensor.innerHTML = '';
   }
   selectSensor.append(document.createElement('option'));
-  for (const paperbin of allIds) {
+  for (const paperbin of idArray) {
     selectSensor.append(createSensorOption(paperbin, counter++));
   }
   if (localStorage.getItem('selectedSensor')) {
