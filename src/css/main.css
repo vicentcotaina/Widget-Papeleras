@@ -1,41 +1,53 @@
-@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   z-index: 0;
 }
+
 :root {
   font-size: 16px;
-  font-family: 'Baloo 2', cursive;
+  font-family: "Baloo 2", cursive;
   color: black;
   width: 100%;
   height: 100%;
 }
+
 body {
   width: 100%;
   height: 100%;
 }
+
 section#widget {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-rows: 0.8fr 3fr;
   grid-template-rows: 0.8fr 3fr;
-  grid-template-areas:
-    'menu'
-    'graficos';
+      grid-template-areas: "menu" "graficos";
   border: 1px solid #ffcd00;
   height: 100%;
   margin: 0;
 }
 section#widget > section#menu {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
   grid-area: menu;
   width: 100%;
   background-color: #ffcd00;
   height: 100%;
 }
 section#widget > section#menu > section#nombreWidget {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: 0.7rem 0 0.5rem 1rem;
 }
 section#widget > section#menu > section#nombreWidget > img {
@@ -52,10 +64,15 @@ section#widget > section#menu > hr {
   border: 1px solid black;
 }
 section#widget > section#menu > ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   list-style-type: none;
-  justify-content: space-around;
-  align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 section#widget > section#menu > ul > li {
   border-radius: 0.5rem;
@@ -64,7 +81,7 @@ section#widget > section#menu > ul > li {
   cursor: pointer;
 }
 section#widget > section#menu > ul > li:hover {
-  background-color:rgba(226, 189, 39, 0.5) !important; 
+  background-color: rgba(226, 189, 39, 0.5) !important;
 }
 section#widget > section#menu > ul > li:nth-child(1) {
   background-color: white;
@@ -76,8 +93,12 @@ section#widget > section#menu > ul > li > a {
   text-align: center;
 }
 section#generalView {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
   grid-area: graficos;
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
 }
 section#generalView > div#datosSensores > h2 {
@@ -88,13 +109,17 @@ section#generalView > div#datosSensores > h2#mesureDate {
 }
 section#generalView > div#datosSensores > div#medidor {
   height: 100%;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 section#generalView > div#map {
   width: 100%;
   height: 100%;
 }
 section#stadisticsView {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
   display: none;
   height: 100%;
   grid-area: graficos;
@@ -107,8 +132,10 @@ section#stadisticsView > select {
   cursor: pointer;
   margin: 1rem 0 1rem 1rem;
 }
+
 @media (max-width: 768px) {
   section#generalView {
+    -ms-grid-columns: 1fr;
     grid-template-columns: 1fr;
   }
   section#generalView > div#map {
@@ -121,8 +148,4 @@ section#stadisticsView > select {
   section#stadisticsView > select {
     text-align: center;
   }
-}
-
-@keyframes buttonHover {
-  100% {background-color:rgba(226, 189, 39, 0.5);}
 }

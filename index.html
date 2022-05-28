@@ -1,66 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Papereres</title>
-    <link rel="shortcut icon" href="./src/img/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="./src/img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./src/css/main.css" />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""
-    />
+    <link rel="shortcut icon" href="./assets/icon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./assets/icon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./src/css/main.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"
-    ></script>
-    <script src="./dist/main.js" type="module" defer></script>
-    <script
-      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin=""
-    ></script>
-    <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
-    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
-    crossorigin=""></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+    <script src="./dist/main.js" type="module" defer=""></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js" integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA==" crossorigin=""></script>
   </head>
-  <body>
-    <main>
-      <section id="widget">
-        <section id="menu">
-          <section id="nombreWidget">
-            <img src="./src/img/papelera.webp" alt="Icono papelera" />
-            <p>INFORMACIÓ PAPERERES</p>
-          </section>
-          <hr />
-          <ul>
-            <li><a id="generalViewButton">VISTA GENERAL</a></li>
-            <li>
-              <a id="stadisticsViewButton">CRONOLOGIA D'ESTADÍSTIQUES</a>
-            </li>
-          </ul>
+  <main>
+    <section id="widget">
+      <section id="menu">
+        <section id="nombreWidget"><img src="./assets/img/papelera.webp" alt="Icono papelera">
+          <p>INFORMACIÓ PAPERERES</p>
         </section>
-        <section id="generalView">
-          <div id="map"></div>
-          <div id="datosSensores">
-            <h2 id="title">MITJANA DE LES PAPERERES</h2>
-            <h2 id="mesureDate"><br /></h2>
-            <div id="temperatureMeasurer"></div>
-            <div id="medidor"></div>
-          </div>
-        </section>
-        <section id="stadisticsView">
-          <select name="sensors"></select>
-          <div id="stadisticsChart">
-            <div id="backdrop"></div>
-          </div>
-        </section>
+        <hr>
+        <ul>
+          <li><a id="generalViewButton">VISTA GENERAL</a></li>
+          <li><a id="stadisticsViewButton">CRONOLOGIA D'ESTADÍSTIQUES</a></li>
+        </ul>
       </section>
-    </main>
-  </body>
+      <section id="generalView">
+        <div id="map"></div>
+        <div id="datosSensores">
+          <h2 id="title">MITJANA DE LES PAPERERES</h2>
+          <h2 id="mesureDate"><br></h2>
+          <div id="temperatureMeasurer"></div>
+          <div id="medidor"></div>
+        </div>
+      </section>
+      <section id="stadisticsView">
+        <select name="sensors"></select>
+        <div id="stadisticsChart">
+          <div id="backdrop"></div>
+        </div>
+      </section>
+    </section>
+  </main>
 </html>

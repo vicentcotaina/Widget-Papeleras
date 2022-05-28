@@ -1,0 +1,164 @@
+@charset "UTF-8";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  z-index: 0;
+}
+
+:root {
+  font-size: 16px;
+  font-family: 'Baloo 2', cursive;
+  color: black;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+section {
+  &#widget {
+    display: grid;
+    grid-template-rows: 0.8fr 3fr;
+    grid-template-areas: 'menu' 'graficos';
+    border: 1px solid #ffcd00;
+    height: 100%;
+    margin: 0;
+
+    > section#menu {
+      grid-area: menu;
+      width: 100%;
+      background-color: #ffcd00;
+      height: 100%;
+
+      > {
+        section#nombreWidget {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin: 0.7rem 0 0.5rem 1rem;
+
+          > {
+            img {
+              background-color: white;
+              border-radius: 100%;
+              width: 3rem;
+              padding: 0.5rem;
+            }
+
+            p {
+              margin-left: 1rem;
+              font-size: 1.2rem;
+            }
+          }
+        }
+
+        hr {
+          border: 1px solid black;
+        }
+
+        ul {
+          display: flex;
+          list-style-type: none;
+          justify-content: space-around;
+          align-items: center;
+
+          > li {
+            border-radius: 0.5rem;
+            margin: 1rem;
+            width: 80%;
+            cursor: pointer;
+
+            &:hover {
+              background-color: rgba(226, 189, 39, 0.5) !important;
+            }
+
+            &:nth-child(1) {
+              background-color: white;
+            }
+
+            > a {
+              padding: 1rem 0 1rem 0;
+              display: block;
+              font-size: 1.2rem;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &#generalView {
+    grid-area: graficos;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    > div {
+      &#datosSensores > {
+        h2 {
+          text-align: center;
+
+          &#mesureDate {
+            display: none;
+          }
+        }
+
+        div#medidor {
+          height: 100%;
+          align-items: center;
+        }
+      }
+
+      &#map {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  &#stadisticsView {
+    display: none;
+    height: 100%;
+    grid-area: graficos;
+
+    > {
+      div#stadisticsChart {
+        height: 100%;
+      }
+
+      select {
+        display: none;
+        cursor: pointer;
+        margin: 1rem 0 1rem 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    &#generalView {
+      grid-template-columns: 1fr;
+
+      > div {
+        &#map {
+          width: 100%;
+          height: 30rem;
+        }
+
+        &#datosSensores > div#medidor {
+          height: 20rem;
+        }
+      }
+    }
+
+    &#stadisticsView > select {
+      text-align: center;
+    }
+  }
+}
