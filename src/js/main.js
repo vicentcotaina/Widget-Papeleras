@@ -9,19 +9,6 @@ import {
   YELLOW_ICON,
   RED_ICON,
 } from './globalParams.js';
-// EXPORTS
-export {
-  getDataFromAPI,
-  geolocate,
-  initMap,
-  createMarker,
-  updateGeneralViewData,
-  updateStadisticsViewData,
-  getMarkerIcon,
-  createSensorOption,
-  setTimelineFillValueGraph,
-  setAverageFillValueGraph,
-};
 // VARIABLES
 const realtimeData = await getDataFromAPI(URL_BASE_API + 'getRealtime');
 const allIds = realtimeData.map((paperbin) => paperbin._id);
