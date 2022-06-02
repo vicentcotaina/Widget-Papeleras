@@ -6,6 +6,7 @@ module.exports = {
   },
   entry: {
     main: './src/js/main.js',
+    bussinesLogic: './src/js/bussinesLogic.js',
     globalParams: './src/js/globalParams.js',
   },
   output: {

@@ -1,19 +1,18 @@
 'use strict';
-const axios = require('axios');
 // IMPORTS
 import {
   URL_BASE_API,
-  LATITUDE_VALENCIA,
-  LONGITUDE_VALENCIA,
-  GREEN_ICON,
-  YELLOW_ICON,
-  RED_ICON,
 } from './globalParams.js';
-// VARIABLES
+
+import {
+  getDataFromAPI,
+  updateGeneralViewData,
+  getMarkerIcon,
+} from './bussinesLogic.js';
+
+// GLOBAL VARIABLES
 const realtimeData = await getDataFromAPI(URL_BASE_API + 'getRealtime');
 const allIds = realtimeData.map((paperbin) => paperbin._id);
-// GLOBAL VARIABLES
-let firstTime = true;
 const generalViewContainer = document.getElementById('generalView');
 const stadisticsViewContainer = document.getElementById('stadisticsView');
 const generalViewButton = document.getElementById('generalViewButton');
@@ -44,7 +43,7 @@ generalViewButton.addEventListener('click', (event) => {
     generalViewContainer.style.display = 'grid';
     stadisticsViewContainer.style.display = 'none';
   }
-  updateGeneralViewData(realtimeData);
+  updateGeneralViewData(realtimeData, setFillValueGraph, initMap, createMarker);
 });
 stadisticsViewButton.addEventListener('click', (event) => {
   setTimeout(() => {
@@ -75,43 +74,9 @@ selectSensor.addEventListener('change', async (event) => {
 if (!navigator.geolocation) {
   throw new Error('Geolocation is not supported on your browser.');
 }
-updateGeneralViewData(realtimeData);
+updateGeneralViewData(realtimeData, setFillValueGraph, initMap, createMarker);
 
 // FUNCIONES
-/**
- *
- * @param {String} url
- * @return {Promise}
- */
-async function getDataFromAPI(url) {
-  try {
-    const response = await axios.get(url);
-    return response.data;
-  } catch (error) {
-    throw new Error('Error in the response of the result.');
-  }
-}
-/**
- *
- * @param {Array} data
- */
-function geolocate(data) {
-  let map;
-  navigator.geolocation.watchPosition(
-      (marker) => {
-        if (firstTime) {
-          map = initMap(LATITUDE_VALENCIA, LONGITUDE_VALENCIA);
-          firstTime = false;
-        }
-        for (const paperbin of data) {
-          marker = createMarker(map, paperbin);
-        }
-      },
-      () => {
-        throw new Error('Error initializing the map.');
-      },
-  );
-}
 /**
  * Creates the map
  * @param {Number} latitude
@@ -158,7 +123,7 @@ function createMarker(map, data) {
       title.style.display = 'none';
       mesureDate.style.display = 'block';
     }
-    setAverageFillValueGraph(data.fillingLevel);
+    setFillValueGraph(data.fillingLevel);
     mesureDate.innerHTML = `
       MESURA PRESA EL 
       ${new Date(data.TimeInstant).toLocaleString('es-ES')}
@@ -166,21 +131,12 @@ function createMarker(map, data) {
   });
   return newMarker;
 }
-/**
- *
- * @param {*} data
- */
-async function updateGeneralViewData(data) {
-  geolocate(data);
-  const fillAverageValue =
-    data.reduce((sum, current) => sum + current.fillingLevel, 0) / data.length;
-  setAverageFillValueGraph(fillAverageValue);
-}
+
 /**
  *
  * @param {Number} data
  */
-function setAverageFillValueGraph(data) {
+function setFillValueGraph(data) {
   const option = {
     series: [
       {
@@ -379,18 +335,4 @@ function createSensorOption(paperbin, sensorNumber) {
   option.value = paperbin;
   option.innerHTML = `Sensor ${sensorNumber}`;
   return option;
-}
-/**
- *
- * @param {*} fillValue
- * @return {Icon}
- */
-function getMarkerIcon(fillValue) {
-  if (fillValue > 0.70) {
-    return RED_ICON;
-  } else if (fillValue > 0.30) {
-    return YELLOW_ICON;
-  } else {
-    return GREEN_ICON;
-  }
 }
