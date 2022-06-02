@@ -1,5 +1,7 @@
+'use strict';
+// REQUIRES
 const axios = require('axios');
-export {getMarkerIcon, updateGeneralViewData, getDataFromAPI};
+// IMPORTS
 import {
   GREEN_ICON,
   YELLOW_ICON,
@@ -7,7 +9,14 @@ import {
   LATITUDE_VALENCIA,
   LONGITUDE_VALENCIA,
 } from './globalParams';
+
+// EXPORTS
+export {getMarkerIcon, updateGeneralViewData, getDataFromAPI};
+
+// GLOBAL VARIABLES
 let firstTime = true;
+
+// FUNCIONES
 /**
  *
  * @param {String} url
