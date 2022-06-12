@@ -238,9 +238,6 @@ function setTimelineFillValueGraph(data = []) {
   const option = {
     tooltip: {
       trigger: 'axis',
-      position: function(pt) {
-        return [pt[0], '10%'];
-      },
     },
     title: {
       left: 'center',
